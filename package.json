@@ -1,0 +1,30 @@
+{
+  "name": "apipromptsgraphql",
+  "version": "1.0.0",
+  "description": "finally proyect",
+  "main": "index.js",
+  "scripts": {
+    "start": "nodemon index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/FernandoGonza27/AppPromptsGraphql.git"
+  },
+  "author": "Fernando González",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/FernandoGonza27/AppPromptsGraphql/issues"
+  },
+  "homepage": "https://github.com/FernandoGonza27/AppPromptsGraphql#readme",
+  "dependencies": {
+    "@sendgrid/mail": "^7.7.0",
+    "cors": "^2.8.5",
+    "dotenv": "^16.3.1",
+    "express": "^4.18.2",
+    "express-graphql": "^0.12.0",
+    "graphql": "^15.8.0",
+    "mongodb": "^5.7.0",
+    "mongoose": "^7.4.1",
+    "nodemon": "^3.0.1"
+  }
+}
