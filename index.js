@@ -4,7 +4,7 @@ const mongoose = require("mongoose");
 const { graphqlHTTP } = require("express-graphql")
 const { schema } = require("./graphql/shemagraphql");
 const { graphresolvers } = require("./graphql/resolversgraphql");
-
+const  tagsRoute  = require("./routes/tags.js");
 dotenv.config();
 const app = express();
 //funcion de la coneccion con mongodb
@@ -29,7 +29,7 @@ app.use(cors({
 }));
 
 
-
+app.use("/api/tags",tagsRoute);
 
 app.use(
     "/graphql",
@@ -39,6 +39,20 @@ app.use(
         graphiql: true,
     })
 )
+
+
+
+//Middlewere para error handlind, entregando mensajes de manera personalizada
+app.use((err,req,res,next)=>{
+    const errorStatus = err.status || 500
+    const errorMessage = err.message || 500
+    return res.status(errorStatus).json({
+        success:false,
+        status:errorStatus,
+        message:errorMessage,
+        stack:err.stack,
+    });
+});
 app.listen(3001, () => {
     connect();
     console.log(`Example app listening on port 3001!`)
