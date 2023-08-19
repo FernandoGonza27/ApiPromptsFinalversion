@@ -1,5 +1,6 @@
-const {jwt} = require("jsonwebtoken");
+const jwt = require("jsonwebtoken");
 const { createError } = require("./error.js");
+
 
 const verifyToken = (req, res, next) => {
   const authorizationHeader = req.headers['authorization'];
@@ -35,7 +36,7 @@ const verifyUser = (req, res, next) => {
 
 const verifyAdmin = (req, res, next) => {
   verifyToken(req, res, () => {
-    if (req.user.isAdmin) {
+    if (req.user && req.user.isAdmin) {  // Verificar si req.user está definido
       next();
     } else {
       return next(createError(403, "You are not authorized!"));

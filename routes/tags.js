@@ -9,8 +9,9 @@ const {
 const { verifyUser } = require("../utils/verifyToken.js");
 const router = express.Router();
 
+
 // Llamando a la función CREATE del controlador
-router.post("/", verifyUser, createTag);
+router.post("/",verifyUser,createTag);
 
 // Llamando a la función UPDATE del controlador
 router.put("/:id", verifyUser, updateTag);
@@ -19,7 +20,7 @@ router.put("/:id", verifyUser, updateTag);
 router.delete("/:id", verifyUser, deleteTag);
 
 // Llamando a la función GET del controlador
-router.get("/", verifyUser, getTag);
+router.get("/", getTag);
 
 // Llamando a otras funciones del controlador (si las tienes)
 

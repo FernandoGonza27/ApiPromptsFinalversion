@@ -1,10 +1,15 @@
 const express = require('express');
 const dotenv = require('dotenv');
+const  bodyParser = require('body-parser')
 const mongoose = require("mongoose");
 const { graphqlHTTP } = require("express-graphql")
 const { schema } = require("./graphql/shemagraphql");
 const { graphresolvers } = require("./graphql/resolversgraphql");
 const  tagsRoute  = require("./routes/tags.js");
+const  promptsRoute  = require("./routes/prompts.js");
+const  authRoute  = require("./routes/auth.js");
+const  usersRoute  = require("./routes/users.js");
+
 dotenv.config();
 const app = express();
 //funcion de la coneccion con mongodb
@@ -17,8 +22,6 @@ const connect = async () => {
     }
 }
 
-// parser for the request body (required for the POST and PUT methods)
-const bodyParser = require("body-parser");
 app.use(bodyParser.json());
 
 // check for cors
@@ -30,6 +33,9 @@ app.use(cors({
 
 
 app.use("/api/tags",tagsRoute);
+app.use("/api/users",usersRoute);
+app.use("/api/prompts",promptsRoute);
+app.use("/api/auth",authRoute);
 
 app.use(
     "/graphql",
@@ -53,7 +59,8 @@ app.use((err,req,res,next)=>{
         stack:err.stack,
     });
 });
-app.listen(3001, () => {
+const portLisent =3300;
+app.listen(portLisent, () => {
     connect();
-    console.log(`Example app listening on port 3001!`)
+    console.log(`Example app listening on port ${portLisent}!`)    
 })
