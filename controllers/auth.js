@@ -74,8 +74,8 @@ const updateVerificationStatus = async (req, res, next) => {
       if (!user) {
         return res.status(404).json({ message: 'Usuario no encontrado' });
       }
-      console.log(user);
-      return res.status(200).json({ message: 'Estado de verificación actualizado exitosamente' });
+      
+      return res.status(200).json({user, message: 'Estado de verificación actualizado exitosamente' });
     } catch (err) {
       next(err);
     }
