@@ -1,7 +1,6 @@
 
-
 const express = require("express");
-const client = require('twilio')(process.env.TWILIO_ACCOUNT_SID, process.env.TWILIO_AUTH_TOKEN);
+//const client = require('twilio')(process.env.TWILIO_ACCOUNT_SID, process.env.TWILIO_AUTH_TOKEN);
 
 const SendMessage = (phoneNumber) => {
   // Generar un código de verificación aleatorio

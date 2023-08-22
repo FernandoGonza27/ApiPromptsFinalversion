@@ -2,9 +2,6 @@ const express = require('express');
 const dotenv = require('dotenv');
 const  bodyParser = require('body-parser')
 const mongoose = require("mongoose");
-const { graphqlHTTP } = require("express-graphql")
-const { schema } = require("./graphql/shemagraphql");
-const { graphresolvers } = require("./graphql/resolversgraphql");
 const  tagsRoute  = require("./routes/tags.js");
 const  promptsRoute  = require("./routes/prompts.js");
 const  authRoute  = require("./routes/auth.js");
@@ -36,15 +33,6 @@ app.use("/api/tags",tagsRoute);
 app.use("/api/users",usersRoute);
 app.use("/api/prompts",promptsRoute);
 app.use("/api/auth",authRoute);
-
-app.use(
-    "/graphql",
-    graphqlHTTP({
-        schema: schema,
-        rootValue: graphresolvers,
-        graphiql: true,
-    })
-)
 
 
 

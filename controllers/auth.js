@@ -2,7 +2,8 @@ const User = require("../models/User.js");
 const bcrypt = require("bcryptjs");
 const { createError } = require("../utils/error.js");
 const jwt = require("jsonwebtoken");
-
+const {SendMessage} =require("../twilio/sms.js");
+const {SendVerificationCodeEmail} = require("../utils/nodeemailer.js");
 const register = async (req, res, next) => {
     try {
         const salt = bcrypt.genSaltSync(10);
@@ -14,8 +15,9 @@ const register = async (req, res, next) => {
             password: hash,
             isVerify: false
         })
-
-        await newUser.save();
+        
+        await newUser.save();        
+        SendVerificationCodeEmail(req.body.email,newUser._id);
         res.status(200).send("User has been created")
     } catch (err) {
         next(err)
@@ -55,16 +57,35 @@ const login = async (req, res, next) => {
 }
 const sendVerification = async (req, res, next) => {
     try {
-        const phoneNumber = "+12058946116"; // Cambia esto al número de teléfono del usuario
-        auth.SendMessage(phoneNumber);
+        const phoneNumber = "+12058946116"; 
+        SendMessage(phoneNumber);
         res.send("Código de verificación enviado");
     } catch (err) {
         next(err)
     }
 }
+const updateVerificationStatus = async (req, res, next) => {
+    const id = req.params.id;
+    console.log(id);
+    try {
+      // Buscar y actualizar el usuario por userId
+      const user = await User.findByIdAndUpdate(id, { isVerified: true }, { new: true });
+  
+      if (!user) {
+        return res.status(404).json({ message: 'Usuario no encontrado' });
+      }
+  
+      return res.status(200).json({ message: 'Estado de verificación actualizado exitosamente' });
+    } catch (err) {
+      next(err);
+    }
+  };
+  
+  
 
 module.exports = {
     login,
     register,
-    sendVerification
+    sendVerification,
+    updateVerificationStatus
 }
