@@ -1,6 +1,6 @@
 const jwt = require("jsonwebtoken");
 const { createError } = require("./error.js");
-
+const { nodemailer } = require("nodemailer");
 
 const verifyToken = (req, res, next) => {
   const authorizationHeader = req.headers['authorization'];
@@ -23,9 +23,8 @@ const verifyToken = (req, res, next) => {
     next();
   });
 };
-
 const verifyUser = (req, res, next) => {
-  verifyToken(req, res, () => {
+  verifyToken(req, res, next, () => {
     if (req.user.id === req.params.id || req.user.isAdmin) {
       next();
     } else {
@@ -33,6 +32,7 @@ const verifyUser = (req, res, next) => {
     }
   });
 };
+
 
 const verifyAdmin = (req, res, next) => {
   verifyToken(req, res, () => {
@@ -43,6 +43,7 @@ const verifyAdmin = (req, res, next) => {
     }
   });
 };
+
 
 module.exports = {
   verifyToken,

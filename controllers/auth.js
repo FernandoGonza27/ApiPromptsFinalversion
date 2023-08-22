@@ -3,7 +3,7 @@ const bcrypt = require("bcryptjs");
 const { createError } = require("../utils/error.js");
 const jwt = require("jsonwebtoken");
 
- const register = async (req, res, next) => {
+const register = async (req, res, next) => {
     try {
         const salt = bcrypt.genSaltSync(10);
         const hash = bcrypt.hashSync(req.body.password, salt);
@@ -12,7 +12,7 @@ const jwt = require("jsonwebtoken");
             username: req.body.username,
             email: req.body.email,
             password: hash,
-            isVerify:false
+            isVerify: false
         })
 
         await newUser.save();
@@ -43,7 +43,7 @@ const login = async (req, res, next) => {
             process.env.JWT
         );
         const { password, ...otherDetails } = user._doc;
-        res                                   
+        res
             .status(200)
             .json({
                 token, // Agrega el token al objeto de respuesta
@@ -53,7 +53,18 @@ const login = async (req, res, next) => {
         next(err)
     }
 }
-module.exports={
+const sendVerification = async (req, res, next) => {
+    try {
+        const phoneNumber = "+12058946116"; // Cambia esto al número de teléfono del usuario
+        auth.SendMessage(phoneNumber);
+        res.send("Código de verificación enviado");
+    } catch (err) {
+        next(err)
+    }
+}
+
+module.exports = {
     login,
-    register
+    register,
+    sendVerification
 }
