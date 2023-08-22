@@ -66,15 +66,15 @@ const sendVerification = async (req, res, next) => {
 }
 const updateVerificationStatus = async (req, res, next) => {
     const id = req.params.id;
-    console.log(id);
+    
     try {
       // Buscar y actualizar el usuario por userId
-      const user = await User.findByIdAndUpdate(id, { isVerified: true }, { new: true });
+      const user = await User.findByIdAndUpdate(id, { isVerify: true }, { new: true });
   
       if (!user) {
         return res.status(404).json({ message: 'Usuario no encontrado' });
       }
-  
+      console.log(user);
       return res.status(200).json({ message: 'Estado de verificación actualizado exitosamente' });
     } catch (err) {
       next(err);
