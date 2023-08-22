@@ -1,23 +1,23 @@
+
+
 const express = require("express");
-const client = require('twilio')(process.env.TWILIO_ACCOUNT_SID,  process.env.TWILIO_AUTH_TOKEN);
+const client = require('twilio')(process.env.TWILIO_ACCOUNT_SID, process.env.TWILIO_AUTH_TOKEN);
 
+const SendMessage = (phoneNumber) => {
+  // Generar un código de verificación aleatorio
+  const verificationCode = Math.floor(1000 + Math.random() * 9000);
 
-const SendMesagge = () =>{
+  // Enviar el mensaje con el código de verificación
+  client.messages
+    .create({
+      body: `Tu código de verificación: ${verificationCode}`,
+      from: '+50662002183', // Tu número de Twilio
+      to: phoneNumber // El número de teléfono del usuario
+    })
+    .then(message => console.log(message.sid))
+    .catch(err => console.error(err));
+};
 
-//Crer un metodo que inicialice un codigo y lo vincule a un usuario
-const codesms =5450;
-client.messages
-  .create({
-     body: `Este es tu codigo de verificacion ${codesms}?`,
-     from: '+50662002183',
-     to: '+12058946116'
-   })
-  .then(message => console.log(message.sid))
-  .catch(err => next(err));
-
-}
-
-const verifyEmail = ()  =>{
-  
-
-}
+module.exports = {
+  SendMessage
+};
