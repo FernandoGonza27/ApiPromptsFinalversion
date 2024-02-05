@@ -1,37 +1,57 @@
-//En cada uno de los model se importara un esquema de moongose con el fin de acomodar el objeto a a la base de datos de mongo db 
 const mongoose = require('mongoose');
 
-//el squema hace referencia al objeto y a los tipos de datos que se utilizaraan 
-
 const UserSchema = new mongoose.Schema({
-    username:{
-        type: String, 
-        require:true,
-        unique:true
+    _username: {
+        type: String,
+        required: true,
+        unique: true
     },
-    email:{
-        type: String, 
-        require:true,
-        unique:true
+    _email: {
+        type: String,
+        required: true,
+        unique: true
     },
-    password:{
-        type: String, 
-        require:true,
-        unique:true
+    _password: {
+        type: String,
+        required: true
     },
-    isVerify:{
-        type:Boolean,
-        default:false,
+    _isVerify: {
+        type: Boolean,
+        default: false,
     },
-    isAdmin:{
-        type:Boolean,
-        default:false,
+    _isAdmin: {
+        type: Boolean,
+        default: false,
     },
-    auth:{
-        type:Boolean,
-        default:true,
-    },
+    _auth: {
+        type: Boolean,
+        default: true,
     }
-,{timestamps: true})
+}, { timestamps: true });
 
-module.exports=  mongoose.model("User", UserSchema);
+// Métodos públicos para acceder a la información encapsulada
+UserSchema.methods.getUsername = function () {
+    return this._username;
+};
+
+UserSchema.methods.getEmail = function () {
+    return this._email;
+};
+
+UserSchema.methods.getPassword = function () {
+    return this._password;
+};
+
+UserSchema.methods.getIsVerify = function () {
+    return this._isVerify;
+};
+
+UserSchema.methods.getIsAdmin = function () {
+    return this._isAdmin;
+};
+
+UserSchema.methods.getAuth = function () {
+    return this._auth;
+};
+
+module.exports = mongoose.model("User", UserSchema);
